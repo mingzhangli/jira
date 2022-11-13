@@ -17,7 +17,7 @@ export const cleanObject = (obj: any) => {
 }
 
 
-export const useDebounce = (value: unknown, delay?: number) => {
+export const useDebounce = <V>(value: V, delay?: number) => {
     const [result, setResult] = useState(value)
 
     useEffect(() => {
