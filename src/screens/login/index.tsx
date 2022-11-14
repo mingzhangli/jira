@@ -1,13 +1,12 @@
 import React, { FormEvent } from 'react'
-
+export interface paramProps {
+    username: string;
+    password: string;
+}
 const Login = () => {
 
     const apiUrl = process.env.REACT_APP_API_URL
 
-    interface paramProps {
-        username: string;
-        password: string;
-    }
     const login = (param: paramProps) => {
         fetch(`${apiUrl}/login`, {
             method: 'POST',
