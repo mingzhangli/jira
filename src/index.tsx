@@ -8,9 +8,9 @@ import { AppProviders } from "./context";
 loadDevTools(() =>
   ReactDOM.render(
     <React.StrictMode>
-
-      <App />
-
+      <AppProviders>
+        <App />
+      </AppProviders>
     </React.StrictMode>
     ,
     document.getElementById('root')

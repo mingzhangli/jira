@@ -4,6 +4,7 @@ module.exports = function (req, res, next) {
             return res.status(200).json({
                 user: {
                     token: '124',
+                    name: req.body.username
                 },
             })
         } else {
