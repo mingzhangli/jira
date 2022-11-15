@@ -1,7 +1,10 @@
-import React, { ReactNode, useState } from 'react'
-import { paramProps } from '../screens/login'
+import React, { ReactNode, useEffect, useState } from 'react'
 import * as auth from '../auth-provider'
 import { User } from '../screens/project-list/search-panel'
+interface paramProps {
+    username: string;
+    password: string;
+}
 const AuthContext = React.createContext<
     | {
         user: User | null;
@@ -15,10 +18,14 @@ const AuthContext = React.createContext<
 AuthContext.displayName = 'AuthContext'
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+
     const [user, setUser] = useState<User | null>(null)
     const login = (form: paramProps) => auth.login(form).then(user => setUser(user))
     const register = (form: paramProps) => auth.register(form).then(user => setUser(user))
     const logout = () => auth.logout().then(user => setUser(null))
+
+
+
     return <AuthContext.Provider value={{ user, login, register, logout }} children={children} />
 }
 

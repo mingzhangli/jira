@@ -1,12 +1,12 @@
 import React, { FormEvent } from 'react'
-import { useAuth } from '../../context/auth-context';
+import { useAuth } from '../context/auth-context';
 export interface paramProps {
     username: string;
     password: string;
 }
 
 
-const Login = () => {
+export const Login = () => {
 
     const apiUrl = process.env.REACT_APP_API_URL
 
@@ -38,4 +38,4 @@ const Login = () => {
     )
 }
 
-export default Login
+
