@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Input, Select } from 'antd'
 export interface User {
     id: string,
     name: string,
@@ -24,19 +24,19 @@ const Searchpanel = ({ users, param, setParam }: SearchPanelProps) => {
         <div>
             <form >
                 {/* setParam(Object.assign({},param,name:evt.target.value)) */}
-                <input type="text" value={param.name} onChange={evt => setParam({
+                <Input type="text" value={param.name} onChange={evt => setParam({
                     ...param,
                     name: evt.target.value
                 })} />
-                <select value={param.personId} onChange={evt => setParam({
+                <Select value={param.personId} onChange={value => setParam({
                     ...param,
-                    personId: evt.target.value
+                    personId: value
                 })}>
-                    <option value={''}>负责人</option>
+                    <Select.Option value={''}>负责人</Select.Option>
                     {
-                        users.map((user, index) => <option value={user.id} key={index}>{user.name}</option>)
+                        users.map((user, index) => <Select.Option value={user.id} key={index}>{user.name}</Select.Option>)
                     }
-                </select>
+                </Select>
             </form>
         </div>
     )
