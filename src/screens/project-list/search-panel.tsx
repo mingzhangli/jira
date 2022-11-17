@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, Select } from 'antd'
+import { Input, Select, Form } from 'antd'
 export interface User {
     id: string,
     name: string,
@@ -22,22 +22,26 @@ const Searchpanel = ({ users, param, setParam }: SearchPanelProps) => {
 
     return (
         <div>
-            <form >
+            <Form style={{ marginBottom: '2rem' }} layout='inline'>
                 {/* setParam(Object.assign({},param,name:evt.target.value)) */}
-                <Input type="text" value={param.name} onChange={evt => setParam({
-                    ...param,
-                    name: evt.target.value
-                })} />
-                <Select value={param.personId} onChange={value => setParam({
-                    ...param,
-                    personId: value
-                })}>
-                    <Select.Option value={''}>负责人</Select.Option>
-                    {
-                        users.map((user, index) => <Select.Option value={user.id} key={index}>{user.name}</Select.Option>)
-                    }
-                </Select>
-            </form>
+                <Form.Item>
+                    <Input type="text" value={param.name} onChange={evt => setParam({
+                        ...param,
+                        name: evt.target.value
+                    })} />
+                </Form.Item>
+                <Form.Item>
+                    <Select value={param.personId} onChange={value => setParam({
+                        ...param,
+                        personId: value
+                    })}>
+                        <Select.Option value={''}>负责人</Select.Option>
+                        {
+                            users.map((user, index) => <Select.Option value={user.id} key={index}>{user.name}</Select.Option>)
+                        }
+                    </Select>
+                </Form.Item>
+            </Form>
         </div>
     )
 }
