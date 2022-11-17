@@ -2,58 +2,51 @@ import { useAuth } from "./context/auth-context"
 import ProjectListScreen from "./screens/project-list"
 import styled from "@emotion/styled"
 import { Row } from "./components/lib"
+import { ReactComponent as SoftwareLogo } from '../src/assets/software-logo.svg'
+import { Dropdown, Menu, Button } from "antd"
+import userEvent from "@testing-library/user-event"
+
 export const Authenciated = () => {
 
-    const { logout } = useAuth()
+    const { logout, user } = useAuth()
+    const items = [
+        {
+            label: <Button type={"link"} onClick={logout}>登出</Button>,
+            key: '0',
+        },
+    ];
+
     return <Container>
         <Header between={true} >
             <HeaderLeft gap={4}>
-                <h3>Logo</h3>
-                <h3>项目</h3>
-                <h3>用户</h3>
+                < SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+                <h2>项目</h2>
+                <h2>用户</h2>
             </HeaderLeft>
             <HeaderRight>
-                <button onClick={() => logout()}>登出</button>
+                <Dropdown menu={{ items }} placement="bottomLeft">
+                    <Button type={"link"} style={{ fontSize: '17px' }}>hi,{user?.name ?? '无'}</Button>
+                </Dropdown>
             </HeaderRight>
         </Header>
-        <Nav>nav</Nav>
-        <Main>
-            <ProjectListScreen />
-        </Main>
-        <Aside>aslide</Aside>
-        <Footer>footer</Footer>
+        <ProjectListScreen />
     </Container>
 }
 
 const Container = styled.div`
-    display:grid;
-    grid-template-rows: 6rem 1fr 6rem;
-    grid-template-columns:20rem 1fr 20rem; 
-    grid-template-areas:
-    "header header header"
-    "nav main aside"
-    "footer footer footer" ;
     height:100vh;
 `
 
 /* grid-area 用来给grid子元素起名字 */
 
 const Header = styled(Row)`
+padding:3.2rem;
 grid-area:header;
 `
 const HeaderLeft = styled(Row)`
 `
 const HeaderRight = styled.div`
-
 `
-const Main = styled.main`grid-area:main`
-const Nav = styled.nav`grid-area:nav`
-const Aside = styled.aside`grid-area:aside`
-const Footer = styled.footer`grid-area:footer`
-
-const PageHeader = styled.header`
-        height:6rem;
-    `
 
 
 
