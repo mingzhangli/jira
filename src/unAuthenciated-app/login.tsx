@@ -1,20 +1,26 @@
 import React, { FormEvent } from 'react'
 import { useAuth } from '../context/auth-context';
 import { Form, Input, Button } from 'antd'
+import { useAsync } from '../utils/use-async';
 export interface paramProps {
     username: string;
     password: string;
 }
 
 
-export const Login = () => {
+export const Login = ({ onError }: { onError: (error: Error) => void }) => {
 
     const apiUrl = process.env.REACT_APP_API_URL
 
     const { user, login } = useAuth()
-    const handleSubmit = (values: { username: string, password: string }) => {
-        login(values)
+    const { isLoading, run } = useAsync(undefined, { throwOnError: true })
+    const handleSubmit = async (values: { username: string, password: string }) => {
 
+        try {
+            await run(login(values))
+        } catch (e: any) {
+            onError(e)
+        }
     }
     return (
         <div>
@@ -26,7 +32,7 @@ export const Login = () => {
                     <Input placeholder={'密码'} type='password' id={'password'} />
                 </Form.Item >
                 <Form.Item>
-                    <Button htmlType={'submit'} type={"primary"}>登录</Button>
+                    <Button htmlType={'submit'} loading={isLoading} type={"primary"}>登录</Button>
                 </Form.Item>
             </Form>
         </div>

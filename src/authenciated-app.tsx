@@ -3,11 +3,12 @@ import ProjectListScreen from "./screens/project-list"
 import styled from "@emotion/styled"
 import { Row } from "./components/lib"
 import { ReactComponent as SoftwareLogo } from '../src/assets/software-logo.svg'
-import { Dropdown, Menu, Button } from "antd"
-import userEvent from "@testing-library/user-event"
-
+import { Dropdown, Button } from "antd"
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Navigate, Route, Routes, } from 'react-router'
+import { ProjectScreen } from './screens/project'
+import { useUrlQueryParam } from "./utils/url"
 export const Authenciated = () => {
-
     const { logout, user } = useAuth()
     const items = [
         {
@@ -15,7 +16,7 @@ export const Authenciated = () => {
             key: '0',
         },
     ];
-
+    console.log(useUrlQueryParam(['name']))
     return <Container>
         <Header between={true} >
             <HeaderLeft gap={4}>
@@ -29,7 +30,17 @@ export const Authenciated = () => {
                 </Dropdown>
             </HeaderRight>
         </Header>
-        <ProjectListScreen />
+        <Router>
+            <Routes>
+                <Route path={"/projects"} element={<ProjectListScreen />} />
+                <Route
+                    path={"/projects/:projectId/*"}
+                    element={<ProjectScreen />}
+                />
+                {/* /* 表示匹配任意字符串 */}
+                <Route index element={<Navigate to="/projects" />} />
+            </Routes>
+        </Router>
     </Container>
 }
 

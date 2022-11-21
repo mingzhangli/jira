@@ -1,22 +1,23 @@
 import { useEffect, useState } from "react"
 import { Login } from "./login"
 import Register from "./register"
-import { Button, Card } from 'antd'
+import { Button, Card, Typography } from 'antd'
 import styled from "@emotion/styled"
 import logo from '../assets/logo.svg'
 import left from '../assets/left.svg'
 import right from '../assets/right.svg'
+import { useDocumentTitle } from "../utils"
 const UnAuthenciated = () => {
     const [isRegister, setIsRegister] = useState(false)
-    useEffect(() => {
-        console.log(isRegister)
-    }, [isRegister])
+    const [error, setError] = useState<Error | null>(null)
+    useDocumentTitle('请登录或者注册')
     return <Container>
         <Header />
         <Background />
         <ShadowCard>
+            {error ? <Typography.Text type="danger" >{error}</Typography.Text> : null}
             {
-                isRegister ? <Register /> : <Login />
+                isRegister ? <Register onError={setError} /> : <Login onError={setError} />
             }
             <a onClick={() => setIsRegister(!isRegister)}>切换到{isRegister ? '登录' : '注册'}</a>
         </ShadowCard>

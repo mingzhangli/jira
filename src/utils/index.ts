@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 
 export const isFalsy: (value: unknown) => boolean = (value) =>
     value === 0 ? false : !value;
@@ -11,7 +11,6 @@ export const cleanObject = (object: { [key: string]: unknown }) => {
 
         const value = result[key];
         if (isFalsy(value)) {
-
             delete result[key];
         }
     });
@@ -35,4 +34,19 @@ export const useDebounce = <V>(value: V, delay?: number) => {
         return () => clearTimeout(timer)
     }, [value, delay])
     return result
+}
+
+export const useDocumentTitle = (title: string, keepOnMount: boolean = true) => {
+    //页面加载是 旧title
+    //页面加载后  新title
+    const oldTitle = useRef(document.title).current
+    useEffect(() => {
+        document.title = title
+    }, [title])
+
+    useEffect(() => {
+        return () => {
+            document.title = oldTitle
+        }
+    }, [oldTitle, keepOnMount])
 }

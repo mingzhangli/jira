@@ -9,7 +9,6 @@ function App() {
   const { user, logout } = useAuth()
   return (
     <div className="App">
-
       {user ? <Authenciated /> : <UnAuthenciated />}
     </div>
   );

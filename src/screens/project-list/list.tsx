@@ -3,8 +3,9 @@ import { User } from "./search-panel"
 import { Table } from 'antd'
 import dayjs from "dayjs"
 import { TableProps } from "antd/es/table";
-
-interface Project {
+import { Link, } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
+export interface Project {
     id: string,
     name: string,
     personId: string,
@@ -22,9 +23,13 @@ const List = ({ users, ...props }: ListProps) => {
     //这里的传参意思表示是  先取出users,剩下对象用解构赋值取出  例子：let a = {name:'ldd',age:16}   let fn = (...props) => {...props}  === {name:'ldd,age:16}
     return <Table pagination={false}  {...props} columns={[
         {
-            title: '名称',
-            dataIndex: 'name',
-            sorter: (a, b) => a.name.localeCompare(b.name)
+            title: "名称",
+            sorter: (a, b) => a.name.localeCompare(b.name),
+            render(value, project) {
+                return (
+                    <Link to={String(project.id)}>{project.name}</Link>
+                );
+            },
         },
         {
             title: '部门',
