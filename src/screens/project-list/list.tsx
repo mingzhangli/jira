@@ -1,4 +1,3 @@
-import React from "react"
 import { User } from "./search-panel"
 import { Table } from 'antd'
 import dayjs from "dayjs"
@@ -18,7 +17,6 @@ interface ListProps extends TableProps<Project> {
     users: User[],
 }
 //这里的ListProps 是包含 ListProps和TableProps及Project三种接口
-
 const List = ({ users, ...props }: ListProps) => {
     //这里的传参意思表示是  先取出users,剩下对象用解构赋值取出  例子：let a = {name:'ldd',age:16}   let fn = (...props) => {...props}  === {name:'ldd,age:16}
     return <Table pagination={false}  {...props} columns={[

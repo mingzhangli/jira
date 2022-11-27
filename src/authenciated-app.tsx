@@ -1,5 +1,4 @@
 import { useAuth } from "./context/auth-context"
-import ProjectListScreen from "./screens/project-list"
 import styled from "@emotion/styled"
 import { Row } from "./components/lib"
 import { ReactComponent as SoftwareLogo } from '../src/assets/software-logo.svg'
@@ -7,7 +6,7 @@ import { Dropdown, Button } from "antd"
 import { BrowserRouter as Router } from 'react-router-dom'
 import { Navigate, Route, Routes, } from 'react-router'
 import { ProjectScreen } from './screens/project'
-import { useUrlQueryParam } from "./utils/url"
+import ProjectListScreen from "./screens/project-list"
 export const Authenciated = () => {
     const { logout, user } = useAuth()
     const items = [
@@ -16,8 +15,8 @@ export const Authenciated = () => {
             key: '0',
         },
     ];
-    console.log(useUrlQueryParam(['name']))
     return <Container>
+
         <Header between={true} >
             <HeaderLeft gap={4}>
                 < SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
@@ -58,6 +57,5 @@ const HeaderLeft = styled(Row)`
 `
 const HeaderRight = styled.div`
 `
-
 
 

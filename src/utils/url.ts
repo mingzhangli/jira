@@ -1,15 +1,25 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams } from "react-router-dom";
+import { useMemo } from 'react'
 
-//返回页面url中的指定键 参数值
+/**
+ * 返回页面url中，指定键的参数值
+ */
+
 
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
-
-    const [searchParams, setSearchParams] = useSearchParams()
-
+    const [searchParams, setSearchParams] = useSearchParams();
+    // console.log(searchParams.get('name'));
     return [
-        keys.reduce((prev, key) => {
-            return { ...prev, [key]: searchParams.get(key) }
-        }, {}),
-        setSearchParams
-    ] as const
-}
+        useMemo(
+            () =>
+                keys.reduce((prev, key) => {
+                    return { ...prev, [key]: searchParams.get(key) || "" };
+                }, {} as { [key in K]: string }),
+
+            // eslint-disable-next-line  react-hooks/exhaustive-deps
+            [searchParams]
+        ),
+        setSearchParams,
+    ] as const;
+};
+
