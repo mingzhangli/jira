@@ -1,5 +1,5 @@
 import initCollapseMotion from 'antd/es/_util/motion';
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { DefaultClause } from 'typescript';
 interface State<D> {
     error: Error | null;
@@ -35,7 +35,7 @@ export const useAsync = <D>(initailState?: State<D>, initialConfig?: typeof defa
         stat: 'error'
     })
 
-    const run = (promise: Promise<D>) => {
+    const run = useCallback((promise: Promise<D>) => {
         if (!promise || !promise.then) {
             throw new Error('请传入promise')
         }
@@ -52,7 +52,7 @@ export const useAsync = <D>(initailState?: State<D>, initialConfig?: typeof defa
                 }
                 return error
             })
-    }
+    }, [setData, state])
     return {
         isIdle: state.stat === 'idle',
         isLoading: state.stat === 'loading',

@@ -7,10 +7,11 @@ import { useHttp } from "../../utils/http"
 import styled from '@emotion/styled'
 import { useProjects } from "../../utils/project"
 import { useUsers } from "../../utils/users"
+import { Button, Row } from "antd"
 const apiUrl = process.env.REACT_APP_API_URL
 
 
-const ProjectListScreen = () => {
+const ProjectListScreen = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
 
     //基本类型、组件状态可以放到依赖里的，非组件状态的对象绝不可以放到依赖里
     const [param, setParam] = useUrlQueryParam(['name', 'personId'])
@@ -24,9 +25,17 @@ const ProjectListScreen = () => {
 
     useDocumentTitle(' 列表', false)
     return <Container>
-        <h1>项目列表</h1>
+        <Row align={'middle'} justify={'space-between'}>
+            <h1>项目列表</h1>
+            <Button onClick={() => props.setProjectModalOpen(true)}>创建项目</Button>
+        </Row>
         <Searchpanel param={param} setParam={setParam} users={users || []} />
-        <List dataSource={list || []} users={users || []} loading={isLoading} />
+        <List
+            dataSource={list || []}
+            users={users || []}
+            loading={isLoading}
+            setProjectModalOpen={props.setProjectModalOpen}
+        />
     </Container>
 }
 export default ProjectListScreen

@@ -7,6 +7,7 @@ import { loadServer } from 'jira-dev-tool';
 import reportWebVitals from './reportWebVitals';
 import { AppProviders } from "./context";
 
+
 ReactDOM.render(
   <React.StrictMode>
     <AppProviders>

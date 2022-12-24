@@ -1,5 +1,6 @@
 import { useAuth } from "./context/auth-context"
 import styled from "@emotion/styled"
+import { useState } from 'react'
 import { Row } from "./components/lib"
 import { ReactComponent as SoftwareLogo } from '../src/assets/software-logo.svg'
 import { Dropdown, Button } from "antd"
@@ -7,8 +8,12 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { Navigate, Route, Routes, } from 'react-router'
 import { ProjectScreen } from './screens/project'
 import ProjectListScreen from "./screens/project-list"
+import { ProjectModal } from "./screens/project-list/project-modal"
+import { ProjectPopover } from "./components/project-popover"
+
 export const Authenciated = () => {
     const { logout, user } = useAuth()
+    const [projectModalOpen, setProjectModalOpen] = useState(false)
     const items = [
         {
             label: <Button type={"link"} onClick={logout}>登出</Button>,
@@ -20,8 +25,8 @@ export const Authenciated = () => {
         <Header between={true} >
             <HeaderLeft gap={4}>
                 < SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-                <h2>项目</h2>
-                <h2>用户</h2>
+                <ProjectPopover setProjectModalOpen={setProjectModalOpen} />
+                <span>用户</span>
             </HeaderLeft>
             <HeaderRight>
                 <Dropdown menu={{ items }} placement="bottomLeft">
@@ -29,9 +34,10 @@ export const Authenciated = () => {
                 </Dropdown>
             </HeaderRight>
         </Header>
+        <ProjectModal projectModalOpen={projectModalOpen} onClose={() => setProjectModalOpen(false)} />
         <Router>
             <Routes>
-                <Route path={"/projects"} element={<ProjectListScreen />} />
+                <Route path={"/projects"} element={<ProjectListScreen setProjectModalOpen={setProjectModalOpen} />} />
                 <Route
                     path={"/projects/:projectId/*"}
                     element={<ProjectScreen />}

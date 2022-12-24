@@ -1,5 +1,5 @@
 import { User } from "./search-panel"
-import { Table } from 'antd'
+import { Dropdown, Menu, Table, Button } from 'antd'
 import dayjs from "dayjs"
 import { TableProps } from "antd/es/table";
 import { Link, } from 'react-router-dom'
@@ -10,11 +10,13 @@ export interface Project {
     personId: string,
     pin: boolean,
     organization: string,
-    created: number
+    created: number,
+
 }
 
 interface ListProps extends TableProps<Project> {
     users: User[],
+    setProjectModalOpen: (isOpen: boolean) => void
 }
 //这里的ListProps 是包含 ListProps和TableProps及Project三种接口
 const List = ({ users, ...props }: ListProps) => {
@@ -48,7 +50,20 @@ const List = ({ users, ...props }: ListProps) => {
                     {users.find(user => user.id === project.personId)?.name || '未知'}
                 </span>
             }
+        },
+        {
+            title: '创建',
+            render() {
+                return <Dropdown overlay={<Menu>
+                    <Menu.Item>
+                        <Button type="link" onClick={() => props.setProjectModalOpen(true)}>编辑</Button>
+                    </Menu.Item>
+                </Menu>}>
+                    <Button type="link">...</Button>
+                </Dropdown>
+            }
         }
+
     ]} />
 }
 export default List
