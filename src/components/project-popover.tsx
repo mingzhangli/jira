@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Button, Divider, List, Popover, Typography } from "antd";
 import { useProjects } from "../utils/project";
 
-export const ProjectPopover = (props: { setProjectModalOpen: (isOpen: boolean) => void }) => {
+export const ProjectPopover = (props: { projectButton: JSX.Element }) => {
     const { data: projects, isLoading } = useProjects()
     const pinnedProjects = projects?.filter(prject => prject.name)
     const content = <Container>
@@ -15,7 +15,7 @@ export const ProjectPopover = (props: { setProjectModalOpen: (isOpen: boolean) =
             }
         </List>
         <Divider />
-        <Button type="link" onClick={() => props.setProjectModalOpen(true)}>创建项目</Button>
+        {props.projectButton}
     </Container>
     return <Popover placement="bottom" content={content}>
         项目

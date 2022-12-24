@@ -25,7 +25,8 @@ export const Authenciated = () => {
         <Header between={true} >
             <HeaderLeft gap={4}>
                 < SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
-                <ProjectPopover setProjectModalOpen={setProjectModalOpen} />
+                <ProjectPopover projectButton={<Button onClick={() => setProjectModalOpen(true)}>创建项目</Button>} />
+                {/* 使用component compsition 进行props值传递，子组件和孙子组件负责渲染则行，大大降低耦合性 */}
                 <span>用户</span>
             </HeaderLeft>
             <HeaderRight>
